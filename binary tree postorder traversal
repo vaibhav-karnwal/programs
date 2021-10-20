@@ -1,0 +1,71 @@
+import java.io.*;
+import java.util.*;
+
+
+class Node{
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data){
+        this.data = data;
+        this.left = null;
+        this.right=null;
+    }
+}
+
+class Pair{
+    Node node;
+    int state;
+
+    Pair(Node node, int state){
+        this.node = node;
+        this.state = state;
+    }
+}
+
+class Main{
+    public static void main(String[] args)throws Exception{
+        Integer arr[] = {1, 2, 3, 4, 5, null, null, null, null, 6, null, null, null};
+        Node root = new Node(1);
+        Pair rtp = new Pair(root,1);
+        Stack<Pair>st = new Stack<>();
+
+        st.push(rtp);
+        int idx=0;
+        while(st.size()>0){
+            Pair top = st.peek();
+            if(top.state==1){
+                idx++;
+                if(arr[idx]!=null){
+                    top.node.left = new Node(arr[idx]);
+                    Pair lp = new Pair(top.node.left,1);
+                    st.push(lp);
+                }else{
+                    top.node.left = null;
+                }
+                top.state++;
+            }else if(top.state==2){
+                idx++;
+                if(arr[idx]!=null){
+                    top.node.right = new Node(arr[idx]);
+                    Pair rp = new Pair(top.node.right,1);
+                    st.push(rp);
+                }else{
+                    top.node.right = null;
+                }
+                top.state++;
+            }else{
+                st.pop();
+            }
+        }
+        postorder(root);
+    }
+    static void postorder(Node root){
+        if(root!=null){
+            postorder(root.left);
+            postorder(root.right);
+            System.out.print(root.data+" ");
+        }
+    }
+}
