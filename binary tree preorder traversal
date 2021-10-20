@@ -59,13 +59,13 @@ class Main{
                 st.pop();
             }
         }
-        inorder(root);
+        preorder(root);
     }
-    static void inorder(Node root){
+    static void preorder(Node root){
         if(root!=null){
             System.out.print(root.data+" ");
-            inorder(root.left);
-            inorder(root.right);
+            preorder(root.left);
+            preorder(root.right);
         }
     }
 }
