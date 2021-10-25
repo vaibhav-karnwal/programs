@@ -1,0 +1,28 @@
+import java.io.*;
+import java.util.*;
+
+class Main{
+    public static void main(String[] args)throws Exception{
+        String str[] = {"map","hey","yeh","pam","ana","naa","aan","in"};
+        HashMap<String, List<String>>map = new HashMap<>();
+        for(int i=0;i<str.length;i++){
+            char[] s = str[i].toCharArray();
+            Arrays.sort(s);
+            String st = Arrays.toString(s);
+            if(map.containsKey(st)){
+                map.get(st).add(str[i]);
+            }else{
+                List<String>lists = new ArrayList<>();
+                lists.add(str[i]);
+                map.put(st,lists);
+            }
+        }
+
+        for(String s: map.keySet()) {
+            List<String>list= map.get(s);
+            if(list.size()>0) {
+                System.out.print(list);
+            }
+        }
+    }
+}
