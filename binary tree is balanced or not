@@ -1,0 +1,53 @@
+import java.io.*;
+import java.util.*;
+
+class Node{
+    int data;
+    Node left,right;
+    Node(int data){
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scan.nextInt();
+        }
+        int k=0;
+        Queue<Node>q = new ArrayDeque<>();
+        Node root = new Node(arr[k++]);
+        q.add(root);
+        while(k!=n){
+            int l = q.size();
+            for(int i=0;i<l;i++){
+                Node top = q.remove();
+                if(k!=n && top.left==null){
+                    top.left = new Node(arr[k++]);
+                    q.add(top.left);
+                }
+                if(k!=n && top.right==null){
+                    top.right = new Node(arr[k++]);
+                    q.add(top.right);
+                }
+            }
+        }
+        System.out.print(balanced(root)!=-1);
+    }
+
+    static int balanced(Node root){
+        if(root==null)return 0;
+        int lh = balanced(root.left);
+        if(lh==-1)return -1;
+        int rh = balanced(root.right);
+        if(rh==-1)return -1;
+        if(Math.abs(lh-rh)>1)return -1;
+        return Math.max(lh,rh)+1;
+    }
+
+}
