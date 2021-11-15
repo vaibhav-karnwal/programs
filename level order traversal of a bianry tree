@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+
+class Node{
+    int data;
+    Node left,right;
+    Node(int data){
+        this.left = null;
+        this.right = null;
+        this.data = data;
+    }
+}
+
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scan.nextInt();
+        }
+        int k=0;
+        Queue<Node>q = new ArrayDeque<>();
+        Node root = new Node(arr[k++]);
+        q.add(root);
+        while(k!=n){
+            int l = q.size();
+            for(int j=0;j<l;j++){
+                Node top = q.remove();
+                if(k!=n&&top.left==null){
+                    top.left = new Node(arr[k++]);
+                    q.add(top.left);
+                }
+                if(k!=n&&top.right==null){
+                    top.right = new Node(arr[k++]);
+                    q.add(top.right);
+                }
+            }
+        }
+        q.clear();
+        List<Integer>list = new ArrayList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            int l = q.size();
+            for(int i=0;i<l;i++){
+                Node top = q.remove();
+                list.add(top.data);
+                if(top.left!=null){
+                    q.add(top.left);
+                }
+                if(top.right!=null){
+                    q.add(top.right);
+                }
+            }
+        }
+        System.out.print(list);
+    }
+}
