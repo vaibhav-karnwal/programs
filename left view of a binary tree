@@ -1,0 +1,62 @@
+import java.io.*;
+import java.util.*;
+
+class Node{
+    int data;
+    Node left,right;
+    Node(int data){
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class Pair{
+    int state;
+    Node root;
+    Pair(Node root,int state){
+        this.root = root;
+        this.state = state;
+    }
+}
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scan.nextInt();
+        }
+        int k=0;
+        Queue<Node>q = new ArrayDeque<>();
+        Node root = new Node(arr[k++]);
+        q.add(root);
+        while(k!=n){
+            int l = q.size();
+            for(int i=0;i<l;i++){
+                Node top = q.remove();
+                if(k!=n && top.left==null){
+                    top.left = new Node(arr[k++]);
+                    q.add(top.left);
+                }
+                if(k!=n && top.right==null){
+                    top.right = new Node(arr[k++]);
+                    q.add(top.right);
+                }
+            }
+        }
+        List<Integer>list = new ArrayList<>();
+        view(root,list,0);
+        System.out.print(list);
+    }
+
+    static List<Integer> view(Node root,List<Integer>list,int level){
+        if(root==null)return list;
+        if(list.size()==level){
+            list.add(root.data);
+        }
+        view(root.left,list,level+1);
+        view(root.right,list,level+1);
+        return list;
+    }
+}
