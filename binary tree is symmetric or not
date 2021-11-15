@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+
+class Node{
+    int data;
+    Node left,right;
+    Node(int data){
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class Pair{
+    int state;
+    Node root;
+    Pair(Node root,int state){
+        this.root = root;
+        this.state = state;
+    }
+}
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scan.nextInt();
+        }
+        int k=0;
+        Queue<Node>q = new ArrayDeque<>();
+        Node root = new Node(arr[k++]);
+        q.add(root);
+        while(k!=n){
+            int l = q.size();
+            for(int i=0;i<l;i++){
+                Node top = q.remove();
+                if(k!=n && top.left==null){
+                    top.left = new Node(arr[k++]);
+                    q.add(top.left);
+                }
+                if(k!=n && top.right==null){
+                    top.right = new Node(arr[k++]);
+                    q.add(top.right);
+                }
+            }
+        }
+        System.out.print(isSymmetric(root));
+    }
+    static boolean isSymmetric(Node root){
+        return root==null || symmetric(root.left,root.right);
+    }
+
+    static boolean symmetric(Node left,Node right){
+        if(left==null||right==null)return left==right;
+        if(left.data!=right.data)return false;
+        return symmetric(left.left,right.right)&&symmetric(left.right,right.left);
+    }
+}
