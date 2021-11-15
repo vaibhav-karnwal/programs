@@ -1,0 +1,77 @@
+import java.io.*;
+import java.util.*;
+
+class Node{
+    int data;
+    Node left,right;
+    Node(int data){
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class Pair{
+    int state;
+    Node root;
+    Pair(Node root,int state){
+        this.root = root;
+        this.state = state;
+    }
+}
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scan.nextInt();
+        }
+        int k=0;
+        Queue<Node>q = new ArrayDeque<>();
+        Node root = new Node(arr[k++]);
+        q.add(root);
+        while(k!=n){
+            int l = q.size();
+            for(int i=0;i<l;i++){
+                Node top = q.remove();
+                if(k!=n && top.left==null){
+                    top.left = new Node(arr[k++]);
+                    q.add(top.left);
+                }
+                if(k!=n && top.right==null){
+                    top.right = new Node(arr[k++]);
+                    q.add(top.right);
+                }
+            }
+        }
+        List<Integer>list = new ArrayList<>();
+        view(root,list);
+        System.out.print(list);
+    }
+
+    static List<Integer> view(Node root,List<Integer>ans){
+        if(root==null)return ans;
+        Map<Integer,Integer>map = new TreeMap<>();
+        Queue<Pair>q = new LinkedList<>();
+        q.add(new Pair(root,0));
+        while(!q.isEmpty()){
+            Pair top = q.remove();
+            int state =top.state;
+            Node temp = top.root;
+            if(map.get(state)==null){
+                map.put(state,temp.data);
+            }
+            if(temp.left!=null){
+                q.add(new Pair(temp.left,state-1));
+            }
+            if(temp.right!=null){
+                q.add(new Pair(temp.right,state+1));
+            }
+        }
+        for(Map.Entry<Integer,Integer>e :map.entrySet()){
+            ans.add(e.getValue());
+        }
+        return ans;
+    }
+}
