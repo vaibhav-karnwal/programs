@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.*;
+
+class Node{
+    int data;
+    Node left,right;
+    Node(int data){
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scan.nextInt();
+        }
+        int k=0;
+        Queue<Node>q = new ArrayDeque<>();
+        Node root = new Node(arr[k++]);
+        q.add(root);
+        while(k!=n){
+            int l = q.size();
+            for(int i=0;i<l;i++){
+                Node top = q.remove();
+                if(k!=n && top.left==null){
+                    top.left = new Node(arr[k++]);
+                    q.add(top.left);
+                }
+                if(k!=n && top.right==null){
+                    top.right = new Node(arr[k++]);
+                    q.add(top.right);
+                }
+            }
+        }
+        System.out.print(diameter(root));
+    }
+
+    static int height(Node root){
+        if(root==null)return -1;
+        int lh = height(root.left);
+        int rh = height(root.right);
+        return Math.max(lh,rh)+1;
+    }
+
+    static int diameter(Node root){
+        if(root==null)return 0;
+        int ld = diameter(root.left);
+        int rd = diameter(root.right);
+        int md = height(root.left)+height(root.right)+2;
+        return Math.max(md,Math.max(ld,rd));
+    }
+}
