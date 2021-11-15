@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.*;
+
+class Node{
+    int data;
+    Node left,right;
+    Node(int data){
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = scan.nextInt();
+        }
+        int k=0;
+        Queue<Node>q = new ArrayDeque<>();
+        Node root = new Node(arr[k++]);
+        q.add(root);
+        while(k!=n){
+            int l=q.size();
+            for(int i=0;i<l;i++){
+                Node top = q.remove();
+                if(k!=n&&top.left==null){
+                    top.left = new Node(arr[k++]);
+                    q.add(top.left);
+                }
+                if(k!=n&&top.right==null){
+                    top.right = new Node(arr[k++]);
+                    q.add(top.right);
+                }
+            }
+        }
+        List<Integer>list = new ArrayList<>();
+        inorder(root,list);
+        System.out.print(list);
+    }
+
+    static List<Integer>inorder(Node root, List<Integer>list){
+        Stack<Node>st1 = new Stack<>();
+        Stack<Node>st2 = new Stack<>();
+        st1.push(root);
+        while(!st1.isEmpty()){
+            Node top = st1.pop();
+            st2.push(top);
+            if(top.left!=null){
+                st1.push(top.left);
+            }
+            if(top.right!=null){
+                st1.push(top.right);
+            }
+        }
+        while(st2.size()>0){
+            Node temp=st2.pop();
+            list.add(temp.data);
+        }
+        return list;
+    }
+}
