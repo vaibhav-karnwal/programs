@@ -1,0 +1,26 @@
+import java.io.*;
+import java.util.*;
+
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        int n = str.length();
+        int start=0,end = n-1;
+        char[] ch = str.toCharArray();
+        while(start<end){
+            char temp = ch[start];
+            ch[start]=ch[end];
+            ch[end]=temp;
+            start++;
+            end--;
+        }
+        str = String.valueOf(ch);
+        String s[] = str.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for(int i=s.length-1;i>=0;i--){
+            sb.append(s[i]+" ");
+        }
+        System.out.print(sb.toString().trim());
+    }
+}
