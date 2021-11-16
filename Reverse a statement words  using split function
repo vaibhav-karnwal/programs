@@ -1,0 +1,24 @@
+import java.io.*;
+import java.util.*;
+
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        String s[] = str.split(" ");
+        int n = s.length;
+        int start=0,end = n-1;
+        while(start<end){
+            String temp = s[start];
+            s[start]=s[end];
+            s[end]=temp;
+            start++;
+            end--;
+        }
+        StringBuilder sb = new StringBuilder();
+        for(String ch:s){
+            sb.append(ch+" ");
+        }
+        System.out.print(sb.toString().trim());
+    }
+}
