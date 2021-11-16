@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+class Main{
+    public static void main(String[] args){
+        String str = "{([]})";
+        Stack<Character>st = new Stack<>();
+        for(int i=0;i<str.length();i++){
+            if(!st.isEmpty() && ((str.charAt(i)==')' && st.peek()=='(')||(str.charAt(i)==']' && st.peek()=='[')|| (str.charAt(i)=='}' && st.peek()=='{'))){
+                st.pop();
+            }else{
+                st.push(str.charAt(i));
+            }
+        }
+        if(!st.isEmpty()){
+            System.out.print("Balanced");
+        }else{
+            System.out.print("unBalanced");
+        }
+    }
+}
