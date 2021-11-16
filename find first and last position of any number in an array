@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int search = scan.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n-1;i++){
+            arr[i]=scan.nextInt();
+        }
+        System.out.print(findfirstposition(0,n-1,arr,search)+1);
+        System.out.print(findlastposition(0,n-1,arr,search)+1);
+    }
+
+    static int findfirstposition(int start, int end, int[] arr, int search){
+        if(start<=end){
+            int mid = (start+end)/2;
+
+            if(arr[mid]==search && arr[mid-1]<search)return mid;
+            else if(arr[mid]<search){
+                return findfirstposition(mid+1,end,arr,search);
+            }else{
+                return findfirstposition(start,mid-1,arr,search);
+            }
+        }
+        return -1;
+    }
+
+    static int findlastposition(int start, int end, int[] arr, int search){
+        if(start<=end){
+            int mid = (start+end)/2;
+
+            if(mid==arr.length-1 || arr[mid]==search && arr[mid+1]>search)return mid;
+            else if(arr[mid]<=search){
+                return findlastposition(mid+1,end,arr,search);
+            }else{
+                return findlastposition(start,mid-1,arr,search);
+            }
+        }
+        return -1;
+    }
+}
