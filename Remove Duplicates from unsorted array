@@ -1,0 +1,16 @@
+import java.io.*;
+import java.util.*;
+
+class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int arr[] = new int[n];
+        Set<Integer>set = new HashSet<>();
+        for(int i=0;i<n;i++){
+            arr[i]=scan.nextInt();
+            set.add(arr[i]);
+        }
+        System.out.print(set);
+    }
+}
