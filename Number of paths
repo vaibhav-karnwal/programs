@@ -1,0 +1,53 @@
+#Number of paths
+
+The problem is to count all the possible paths from top left to bottom right of a MxN matrix with the constraints that from each cell you can either move to right or down.
+Example 1:
+Input:
+M = 3 and N = 3
+Output: 6
+
+//Using recursion : O(m+n-1) O(1)
+
+numberOfPaths(int m, int n) {
+   if(m==1 || n==1){
+       return 1;
+   }
+   return numberOfPaths(m-1,n)+numberOfPaths(m,n-1);
+}
+//Using two loop : O(m*n) O(m*n)
+
+1	1	1
+1	2	3
+1	3	6
+
+numberOfPaths(int m, int n) {
+   int a[m][n]={0};
+   for(int i=0;i<m;i++){
+       for(int j=0;j<n;j++){
+           if(i==0 || j==0){ 
+               a[i][j]=1;
+           }else
+           a[i][j]=a[i-1][j]+a[i][j-1];
+       }
+   }
+   return a[m-1][n-1];
+}
+
+//Using factorial : O(m+n+2) O(1)
+
+ numberOfPaths(int m, int n) {
+      int val=m+n-2;
+      long f1=factorial(val);
+      long f2=factorial(n-1);
+      long f3=factorial(m-1);
+      long di=f2*f3;
+      return f1/di;
+   }
+   public static long factorial(int val){
+       long re=1;
+       for(int i=1;i<=val;i++){
+           re*=i;
+       }
+       return re;
+   }
+}
